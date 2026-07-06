@@ -1,26 +1,147 @@
 @import "tailwindcss";
 
+@theme {
+  --color-background: #0A0505;
+  --color-foreground: #FFFFFF;
+  --color-bg-base: #0A0505;
+  --color-bg-mid: #160808;
+  --color-bg-elevated: #220D0D;
+  
+  --color-accent-indigo: #990011;
+  --color-accent-purple: #DC2626;
+  --color-accent-cyan: #FF3344;
+  
+  --font-sans: var(--font-inter), var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0A0505;
+  --foreground: #ffffff;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #0A0505;
+  color: #ffffff;
+  overflow-x: hidden;
 }
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0A0505;
+}
+::-webkit-scrollbar-thumb {
+  background: #220D0D;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #FF3344;
+}
+
+/* Glassmorphism panel styling */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel-hoverable:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 51, 68, 0.3); /* Neon red hover highlight */
+  box-shadow: 0 12px 40px 0 rgba(255, 51, 68, 0.15);
+}
+
+/* Shimmer Sweep Animation on Button Hover */
+@keyframes shimmer-sweep {
+  0% {
+    left: -150%;
+  }
+  50% {
+    left: 50%;
+  }
+  100% {
+    left: 250%;
+  }
+}
+
+.shimmer-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
+  transform: skewX(-25deg);
+  transition: none;
+}
+
+.shimmer-btn:hover::after {
+  animation: shimmer-sweep 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Ambient Radial Mesh Backgrounds */
+.radial-mesh-1 {
+  background: radial-gradient(circle at 10% 20%, rgba(220, 38, 38, 0.12) 0%, transparent 60%),
+              radial-gradient(circle at 90% 80%, rgba(153, 0, 17, 0.12) 0%, transparent 60%);
+}
+
+.radial-mesh-2 {
+  background: radial-gradient(circle at 50% 40%, rgba(255, 51, 68, 0.08) 0%, transparent 70%);
+}
+
+/* Custom Cursor styles */
+.cursor-trail-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background-color: #FF3344;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s, background-color 0.3s;
+}
+
+.cursor-trail-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255, 51, 68, 0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s, border-color 0.3s, background-color 0.3s;
+}
+
+/* Hide default cursor on interactive surfaces if custom cursor is active */
+.custom-cursor-active,
+.custom-cursor-active * {
+  cursor: none !important;
+}
+
