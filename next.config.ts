@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    unoptimized: true, // Disables image resizing cache to save disk memory
+  },
 };
 
 export default nextConfig;

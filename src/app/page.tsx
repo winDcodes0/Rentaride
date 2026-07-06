@@ -290,6 +290,7 @@ export default function Home() {
               
               {/* Destination Card 1 */}
               <motion.div
+                id="portal-jai-valley"
                 variants={fadeUp}
                 initial="initial"
                 whileInView="whileInView"
@@ -337,6 +338,7 @@ export default function Home() {
 
               {/* Destination Card 2 */}
               <motion.div
+                id="portal-guldanda"
                 variants={fadeUp}
                 initial="initial"
                 whileInView="whileInView"
@@ -349,7 +351,7 @@ export default function Home() {
                 <div
                   className="absolute inset-0 bg-cover bg-center transition-transform duration-[1200ms] cubic-bezier(0.16, 1, 0.3, 1) group-hover:scale-105"
                   style={{
-                    backgroundImage: `url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80')`,
+                    backgroundImage: `url('/images/guldanda.jpg')`,
                   }}
                 />
                 
@@ -449,6 +451,7 @@ export default function Home() {
               
               {/* Card 1 */}
               <motion.div
+                id="portal-padri-pass"
                 variants={fadeUp}
                 initial="initial"
                 whileInView="whileInView"
@@ -487,6 +490,7 @@ export default function Home() {
 
               {/* Card 2 */}
               <motion.div
+                id="portal-seoj-meadow"
                 variants={fadeUp}
                 initial="initial"
                 whileInView="whileInView"
@@ -763,7 +767,6 @@ export default function Home() {
                     muted={isMuted}
                     playsInline
                     className="w-full h-full object-cover select-none pointer-events-none relative z-0"
-                    poster={testimonials[activeTestimonial].avatar}
                   />
 
                   {/* Mute Overlay Button */}
@@ -919,9 +922,9 @@ export default function Home() {
                     PHASES
                   </h4>
                   <ul className="space-y-3">
-                    {["Discover", "Explore", "Trust", "Book", "Confirm"].map((phase) => (
+                    {["Discover", "Explore", "Trust", "Book", "Confirm"].map((phase, idx) => (
                       <li key={phase}>
-                        <a href="#" className="text-xs text-gray-400 hover:text-white transition-colors" data-hover="true">
+                        <a href={`#phase-${idx + 1}`} className="text-xs text-gray-400 hover:text-white transition-colors" data-hover="true">
                           {phase}
                         </a>
                       </li>
@@ -933,10 +936,16 @@ export default function Home() {
                     PORTALS
                   </h4>
                   <ul className="space-y-3">
-                    {["Jai Valley", "Guldanda", "Padri Pass", "Chatgala Pass", "Seoj Meadow"].map((port) => (
-                      <li key={port}>
-                        <a href="#" className="text-xs text-gray-400 hover:text-white transition-colors" data-hover="true">
-                          {port}
+                    {[
+                      { name: "Jai Valley", target: "#portal-jai-valley" },
+                      { name: "Guldanda", target: "#portal-guldanda" },
+                      { name: "Padri Pass", target: "#portal-padri-pass" },
+                      { name: "Chatgala Pass", target: "#phase-4" },
+                      { name: "Seoj Meadow", target: "#portal-seoj-meadow" }
+                    ].map((port) => (
+                      <li key={port.name}>
+                        <a href={port.target} className="text-xs text-gray-400 hover:text-white transition-colors" data-hover="true">
+                          {port.name}
                         </a>
                       </li>
                     ))}
