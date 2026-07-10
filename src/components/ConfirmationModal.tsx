@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, CheckCircle, ArrowRight, User, Phone, Loader2 } from "lucide-react";
 import MagneticContainer from "./MagneticContainer";
 
-const WEB3FORMS_ACCESS_KEY = "50551a49-5bac-4440-9ae7-acd1b67a290e";
+const WEB3FORMS_ACCESS_KEY: string = "50551a49-5bac-4440-9ae7-acd1b67a290e";
 
 interface BookingData {
   destination: string;
