@@ -82,7 +82,7 @@ export default function BookingPanel({ onSearchSubmit }: BookingPanelProps) {
 
   return (
     <div className="w-full max-w-5xl mx-auto px-4 relative z-20">
-      <div className="glass-panel rounded-[24px] p-6 md:p-8 backdrop-blur-xl relative overflow-hidden">
+      <div className="glass-panel rounded-[24px] p-6 md:p-8 backdrop-blur-xl relative overflow-visible">
         {/* Glow border overlay */}
         <div className="absolute inset-0 border border-white/10 rounded-[24px] pointer-events-none" />
         
