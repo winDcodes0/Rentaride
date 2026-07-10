@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, CheckCircle, ArrowRight, User, Phone, Loader2 } from "lucide-react";
 import MagneticContainer from "./MagneticContainer";
 
-const WEBHOOK_URL = "https://hook.your-automation-platform.example/route";
+const WEB3FORMS_ACCESS_KEY = "50551a49-5bac-4440-9ae7-acd1b67a290e";
 
 interface BookingData {
   destination: string;
@@ -82,39 +82,47 @@ export default function ConfirmationModal({
     setIsSubmitting(true);
 
     const payload = {
-      bookingReference: bookingRef,
-      fullName: fullName.trim(),
-      contactNumber: contactNumber.trim(),
-      destination,
-      startDate,
-      endDate,
-      explorers,
+      access_key: WEB3FORMS_ACCESS_KEY,
+      subject: `New Rentaride Booking [${bookingRef}] - ${fullName.trim()}`,
+      from_name: "Rentaride Portal",
+      "Booking Reference": bookingRef,
+      "Full Name": fullName.trim(),
+      "Contact Number": contactNumber.trim(),
+      "Destination": destination,
+      "Start Date": formatDate(startDate),
+      "End Date": formatDate(endDate),
+      "Explorers Count": `${explorers} Explorer(s)`,
     };
 
     try {
-      console.log("Transmitting payload to Webhook:", payload);
+      console.log("Transmitting payload to Web3Forms:", payload);
+
+      if (WEB3FORMS_ACCESS_KEY === "YOUR_WEB3FORMS_ACCESS_KEY_HERE" || !WEB3FORMS_ACCESS_KEY) {
+        console.warn("Using placeholder Web3Forms Access Key. Simulating local API delay...");
+        await new Promise((resolve) => setTimeout(resolve, 1200));
+        setIsSuccess(true);
+        return;
+      }
       
-      const response = await fetch(WEBHOOK_URL, {
+      const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Accept": "application/json",
         },
         body: JSON.stringify(payload),
       });
 
-      if (response.ok) {
+      const data = await response.json();
+
+      if (response.ok && data.success) {
         setIsSuccess(true);
       } else {
-        throw new Error("Target webhook rejected data submission.");
+        throw new Error(data.message || "Web3Forms rejected data submission.");
       }
-    } catch (err) {
-      console.warn(
-        "Webhook endpoint connection failed (expected with placeholder URL). Falling back to client-side success mockup.",
-        err
-      );
-      // Simulate network latency and resolve to true to ensure flawless presentation
-      await new Promise((resolve) => setTimeout(resolve, 1200));
-      setIsSuccess(true);
+    } catch (err: any) {
+      console.error("Web3Forms submission failed:", err);
+      setErrorMsg(err.message || "Failed to submit booking details. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
