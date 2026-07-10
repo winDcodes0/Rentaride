@@ -113,7 +113,7 @@ export default function BookingPanel({ onSearchSubmit }: BookingPanelProps) {
                 data-cursor-text="WRITE"
               />
               {showDestDropdown && (
-                <div className="absolute left-0 right-0 top-full mt-2 bg-bg-elevated border border-white/10 rounded-xl max-h-60 overflow-y-auto scrollbar-thin shadow-2xl z-50 backdrop-blur-2xl">
+                <div className="absolute left-0 right-0 top-full mt-2 bg-bg-elevated border border-white/10 rounded-xl overflow-hidden shadow-2xl z-50 backdrop-blur-2xl">
                   {LUXURY_DESTINATIONS.filter((dest) =>
                     dest.toLowerCase().includes(destination.toLowerCase())
                   ).map((dest) => (
